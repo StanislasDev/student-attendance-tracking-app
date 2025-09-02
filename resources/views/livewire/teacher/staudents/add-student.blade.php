@@ -6,6 +6,9 @@
                 <h2 class="text-xl text-gray-800 font-bold sm:text-3xl dark:text-white">
                     Add a student
                 </h2>
+                <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                    Add a new student.
+                </p>
             </div>
 
             <!-- Card -->

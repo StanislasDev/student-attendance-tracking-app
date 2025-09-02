@@ -12,10 +12,10 @@
                             class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-neutral-700">
                             <div>
                                 <h2 class="text-xl font-semibold text-gray-800 dark:text-neutral-200">
-                                    Students
+                                    Grades
                                 </h2>
                                 <p class="text-sm text-gray-600 dark:text-neutral-400">
-                                    Students overview.
+                                    Grades overview.
                                 </p>
                             </div>
 
@@ -23,7 +23,7 @@
                                 <div class="inline-flex gap-x-2">
 
                                     <a class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
-                                        href="/create/student" wire:navigate>
+                                        href="/grade/create" wire:navigate>
                                         <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
                                             height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -46,21 +46,7 @@
                                         class="px-6 py-3 text-start border-s border-gray-200 dark:border-neutral-700">
                                         <span
                                             class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
-                                            Student name
-                                        </span>
-                                    </th>
-
-                                    <th scope="col" class="px-6 py-3 text-start">
-                                        <span
-                                            class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
-                                            Grade
-                                        </span>
-                                    </th>
-
-                                    <th scope="col" class="px-6 py-3 text-start">
-                                        <span
-                                            class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
-                                            Age
+                                            Grade name
                                         </span>
                                     </th>
 
@@ -74,33 +60,20 @@
                             </thead>
 
                             <tbody class="divide-y divide-gray-200 dark:divide-neutral-700">
-                                @foreach ($students as $student)
+                                @foreach ($grades as $grade)
                                     <tr>
                                         <td class="h-px w-auto whitespace-nowrap">
                                             <div class="px-6 py-2">
                                                 <span
-                                                    class="font-semibold text-sm text-gray-800 dark:text-neutral-200">{{ $student->first_name }}
-                                                    {{ $student->last_name }}</span>
+                                                    class="font-semibold text-sm text-gray-800 dark:text-neutral-200">
+                                                    {{ $grade->name }}</span>
                                                 {{-- <span class="text-xs text-gray-500 dark:text-neutral-500">(23.16%)</span> --}}
                                             </div>
                                         </td>
-                                        <td class="h-px w-auto whitespace-nowrap">
-                                            <div class="px-6 py-2">
-                                                <span
-                                                    class="text-sm text-gray-800 dark:text-neutral-200">{{ $student->grade->name }}</span>
-                                                {{-- <span class="text-xs text-gray-500 dark:text-neutral-500">(24.50%)</span> --}}
-                                            </div>
-                                        </td>
-                                        <td class="h-px w-auto whitespace-nowrap">
-                                            <div class="px-6 py-2">
-                                                <span
-                                                    class="text-sm text-gray-800 dark:text-neutral-200">{{ $student->age }}</span>
-                                                {{-- <span class="text-xs text-gray-500 dark:text-neutral-500">(21.67%)</span> --}}
-                                            </div>
-                                        </td>
+
                                         <td class="h-px w-auto whitespace-nowrap">
                                             <div class="flex space-x-4 py-1"> <!-- Espace horizontal de 0.5rem (8px) -->
-                                                <a href="/edit/student/{{ $student->id }}" wire:navigate
+                                                <a href="/grade/edit/{{ $grade->id }}" wire:navigate
                                                     class="py-3 px-4 flex justify-center items-center size-12 text-sm font-medium rounded-lg border border-transparent bg-blue-500 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -110,7 +83,7 @@
                                                     </svg>
                                                 </a>
 
-                                                <button type="button" wire:click="delete({{ $student->id }})"
+                                                <button type="button" wire:click="delete({{ $grade->id }})"
                                                     class="py-3 px-4 flex justify-center items-center size-12 text-sm font-medium rounded-lg border border-transparent bg-red-500 text-white hover:bg-red-600 focus:outline-hidden focus:bg-red-700 disabled:opacity-50 disabled:pointer-events-none">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
