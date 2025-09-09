@@ -61,7 +61,7 @@
 
                             <tbody class="divide-y divide-gray-200 dark:divide-neutral-700">
                                 @foreach ($grades as $grade)
-                                    <tr>
+                                    <tr :key="{{ $grade->id }}">
                                         <td class="h-px w-auto whitespace-nowrap">
                                             <div class="px-6 py-2">
                                                 <span

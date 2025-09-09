@@ -3,6 +3,7 @@
 use App\Livewire\Settings\Profile;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Appearance;
+use App\Livewire\Teacher\Attendance\AttendancePage;
 use App\Livewire\Teacher\Grades\AddGrade;
 use App\Livewire\Teacher\Grades\EditGrade;
 use App\Livewire\Teacher\Grades\GradeList;
@@ -31,6 +32,11 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/list', GradeList::class)->name('grade.index');
         Route::get('/create', AddGrade::class)->name('grade.create');
         Route::get('/edit/{id}', EditGrade::class)->name('grade.edit');
+    });
+
+    // Attendances
+    Route::prefix('attendance')->group(function(){
+        Route::get('/', AttendancePage::class)->name('attendance.page');
     });
 });
 
