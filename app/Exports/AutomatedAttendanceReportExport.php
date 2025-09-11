@@ -7,33 +7,32 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
-class AttendanceExport implements FromCollection, WithMapping, WithHeadings
+class AutomatedAttendanceReportExport implements FromCollection, WithMapping, WithHeadings
 {
-    protected $year, $month, $grade;
-    public function __construct($year, $month, $grade)
+    protected $startDate, $endDate;
+    public function __construct($startDate, $endDate)
     {
-        $this->year = $year;
-        $this->month = $month;
-        $this->grade = $grade;
+        $this->startDate = $startDate;
+        $this->endDate = $endDate;
     }
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
-        return Attendance::whereYear('date', $this->year)
-            ->whereMonth('date', $this->month)
-            ->whereHas('student', function($query) {
-                $query->where('grade_id', $this->grade);
-            })
+        return Attendance::with(['student', 'grade'])
+            ->whereDate('date', '>=', $this->startDate)
+            ->whereDate('date', '<=', $this->endDate)
             ->get();
+
+            // dd($this->startDate, $this->endDate, $data->toArray());
     }
 
     public function map($row): array
     {
         return [
             $row->student ? $row->student->first_name . ' ' . $row->student->last_name : 'N/A',
-            // $row->grade ? $row->grade->name : 'N/A', 
+            // $row->grade ? $row->grade->name : 'N/A', // si tu veux aussi la classe
             $row->date,
             ucfirst($row->status),
             $row->reason ?? 'N/A'
