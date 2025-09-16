@@ -36,8 +36,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
 });
 
-Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-    Route::get('/dashboard', AdminDashboard::class)->name('admin.dashboard');
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('admin/dashboard', AdminDashboard::class)->name('admin.dashboard');
     // students
     Route::get('/student-list', StudentList::class)->name('student.index');
     Route::get('/create/student', AddStudent::class)->name('student.create');

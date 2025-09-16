@@ -1,32 +1,15 @@
 <div>
     <div class="grid grid-cols-1 md:grid-col-2 lg:grid-cols-4 gap-4">
-        <div class="bg-blue-500 text-white p-4 rounded-lg shadow-md">
-            <h3 class="text-xl font-bold">Total Students</h3>
-            <p class="text-3xl">{{ $totalStudents }}</p>
-        </div>
+        <x-stats-card title="Total Students" tooltip="Showing number of all active Students" value="{{ $totalStudents }}" percentage="" />
         @if (auth()->user()->role === 'admin')
-            <div class="bg-indigo-800 text-white p-4 rounded-lg shadow-md">
-            <h3 class="text-xl font-bold">Total Users</h3>
-            <p class="text-3xl">{{ $totalUsers }}</p>
-        </div>
-        <div class="bg-orange-500 text-white p-4 rounded-lg shadow-md">
-            <h3 class="text-xl font-bold">Total Teachers</h3>
-            <p class="text-3xl">{{ $totalTeachers }}</p>
-        </div>
+            <x-stats-card title="Total Users" tooltip="Showing number of all active Users" value="{{ $totalUsers }}" percentage="" />
+            <x-stats-card title="Total Teachers" tooltip="Showing number of all active Teachers" value="{{ $totalTeachers }}" percentage="" />
         @endif
-        <div class="bg-green-500 text-white p-4 rounded-lg shadow-md">
-            <h3 class="text-xl font-bold">Present Today</h3>
-            <p class="text-3xl">{{ $presentToday }}</p>
-        </div>
-        <div class="bg-red-500 text-white p-4 rounded-lg shadow-md">
-            <h3 class="text-xl font-bold">Absent Today</h3>
-            <p class="text-3xl">{{ $absentToday }}</p>
-        </div>
-        <div class="bg-purple-500 text-white p-4 rounded-lg shadow-md">
-            <h3 class="text-xl font-bold">Weekly Attendance Rate</h3>
-            <p class="text-3xl">{{ $weeklyAttendanceRate }}%</p>
-        </div>
-    </div>
+        <x-stats-card title="Attendance Today" tooltip="" value="{{ $attendanceToday }}" percentage="" />
+        <x-stats-card title="Present Today" tooltip="" value="{{ $presentToday }}" percentage="" />
+        <x-stats-card title="Absent Today" tooltip="" value="{{ $absentToday }}" percentage="" />
+        <x-stats-card title="Weekly Attendance Rate" tooltip="" value="{{ $weeklyAttendanceRate }}" percentage="{{ $weeklyAttendanceRate }}" />
+    </div> 
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Tableau de présence mensuelles -->

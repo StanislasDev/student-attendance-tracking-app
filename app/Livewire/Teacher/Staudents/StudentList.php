@@ -8,6 +8,12 @@ use Masmerise\Toaster\Toaster;
 
 class StudentList extends Component
 {
+    public $totalStudents;
+
+    public function mount()
+    {
+        $this->totalStudents = Student::count();
+    }
     public function delete($id)
     {
         Student::find($id)->delete();
