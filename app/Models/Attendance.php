@@ -11,8 +11,12 @@ class Attendance extends Model
         'student_id',
         'grade_id',
         'date',
-        'reason',
         'status',
+        'reason',
+    ];
+
+    protected $casts = [
+        'date' => 'date:Y-m-d',
     ];
 
     public function student(): BelongsTo

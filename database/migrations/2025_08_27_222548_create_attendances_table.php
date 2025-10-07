@@ -19,6 +19,8 @@ return new class extends Migration
             $table->enum('status', ['present', 'absent', 'sick', 'other'])->default('present');
             $table->text('reason')->nullable(); // Raison si absent, malade ou autre
             $table->timestamps();
+
+            $table->unique(['student_id', 'date']); // ✅ empêche les doublons
         });
     }
 

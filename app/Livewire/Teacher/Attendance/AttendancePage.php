@@ -24,44 +24,63 @@ class AttendancePage extends Component
     }
 
     public function fetchStudents()
-    {
+{
         if ($this->year && $this->month && $this->grade) {
             $this->students = Student::where('grade_id', $this->grade)->get();
-            // dd($this->students);
 
-            // Générer les dates du mois sélectionné
+            $today = Carbon::today()->format('Y-m-d');
+
+            // Initialiser tous les étudiants présents aujourd'hui si non encore enregistrés
+            foreach ($this->students as $student) {
+                Attendance::firstOrCreate(
+                    [
+                        'student_id' => $student->id,
+                        'date' => $today,
+                    ],
+                    [
+                        'status' => 'present',
+                        'grade_id' => $this->grade,
+                    ]
+                );
+            }
+
+            // Charger les présences pour le mois choisi
             foreach ($this->students as $student) {
                 foreach (range(1, Carbon::create($this->year, $this->month)->daysInMonth) as $day) {
                     $date = Carbon::create($this->year, $this->month, $day)->format('Y-m-d');
                     $this->attendance[$student->id][$day] = Attendance::where('student_id', $student->id)
                         ->whereDate('date', $date)
                         ->value('status') ?? 'present';
-                    // dd($this->attendance[$student->id][$day]);
+                        // dd($this->attendance[$student->id][$day]);
                 }
             }
         }
     }
 
+
     public function updateAttendance($studentId, $day, $status)
     {
         $date = Carbon::create($this->year, $this->month, $day)->format('Y-m-d');
 
-        Attendance::updateOrCreate(
+        $record = Attendance::updateOrCreate(
             [
                 'student_id' => $studentId,
-                'date' => $date
+                'date' => $date,
             ],
             [
                 'status' => $status,
-                'grade_id'  => $this->grade
+                'grade_id' => $this->grade,
             ]
         );
 
-        // Mettre à jour l'état local pour refléter le changement immédiatement
-        $this->attendance[$studentId][$day] = $status;
+        // Met à jour l’état local pour refléter immédiatement la modification
+        $this->attendance[$studentId][$day] = $record->status;
 
-        // Optionnel: Ajouter une notification de succès
-        Toaster::success('Attendance for date: ' . $date . 'for student ID: ' . $studentId . ' updated successfully to ' . $status);
+        // Rafraîchir les données du tableau (utile pour le jour courant)
+        $this->fetchStudents();
+
+        // // Optionnel: Ajouter une notification de succès
+        Toaster::success("Attendance updated for student ID: $studentId on $date → $status");
     }
 
     public function markAll($day, $status)
