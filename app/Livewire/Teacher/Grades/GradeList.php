@@ -8,6 +8,12 @@ use Masmerise\Toaster\Toaster;
 
 class GradeList extends Component
 {
+    public $totalGrades;
+
+    public function mount()
+    {
+        $this->totalGrades = Grade::count();
+    }
     public function delete($id)
     {
         Grade::find($id)->delete();

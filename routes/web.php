@@ -8,7 +8,10 @@ use App\Livewire\Admin\AdminDashboard;
 use App\Livewire\Teacher\Grades\AddGrade;
 use App\Livewire\Teacher\Grades\EditGrade;
 use App\Livewire\Teacher\Grades\GradeList;
+use App\Livewire\Teacher\Teachers\AddTeacher;
 use App\Livewire\Teacher\Staudents\AddStudent;
+use App\Livewire\Teacher\Teachers\EditTeacher;
+use App\Livewire\Teacher\Teachers\TeacherList;
 use App\Livewire\Teacher\Staudents\EditStudent;
 use App\Livewire\Teacher\Staudents\StudentList;
 use App\Livewire\Teacher\Attendance\AttendancePage;
@@ -48,6 +51,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/list', GradeList::class)->name('grade.index');
         Route::get('/create', AddGrade::class)->name('grade.create');
         Route::get('/edit/{id}', EditGrade::class)->name('grade.edit');
+    });
+    // Teachers
+    Route::prefix('teacher')->group(function(){
+        Route::get('/list', TeacherList::class)->name('teacher.index');
+        Route::get('/create', AddTeacher::class)->name('teacher.create');
+        Route::get('/edit/{id}', EditTeacher::class)->name('teacher.edit');
     });
 
 });
